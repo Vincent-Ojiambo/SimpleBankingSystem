@@ -2,13 +2,16 @@
 
 import from byllm.llm { Model };
 
+# Initialize LLM
 glob llm = Model(model_name="gpt-4o", verbose=False);
 
-"""AI advice generator"""
+# AI advice generator
 def financial_advice(balance: int) -> str by llm();
 
 node Transaction {
-    has type: str, amount: int, balance_after: int;
+    has type: str;
+    has amount: int;
+    has balance_after: int;
 }
 
 walker Bank {
@@ -46,7 +49,6 @@ impl Bank.advice {
     return { "advice": financial_advice(self.balance) };
 }
 
-# CLI entry
 with entry:__main__ {
     root spawn Bank(300);
 }
